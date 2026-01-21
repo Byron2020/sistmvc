@@ -1,0 +1,127 @@
+  body {
+      overflow-x: hidden;
+  }
+
+  .sidebar {
+      min-height: 100vh;
+  }
+.carousel-img-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.carousel-img {
+    width: 80%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* BANNER SOBRE LA IMAGEN */
+.info-banner {
+    position: absolute;
+    bottom: 0;
+    width: 80%;
+    background: rgba(220, 53, 69, 0.75); /* rojo con opacidad */
+    color: #fff;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    border-radius: 0 0 10px 10px;
+}
+
+/* CONTROLES VERTICALES */
+.carousel-controls-vertical {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: static;
+    width: 40px;
+    height: 40px;
+    background: rgba(0,0,0,.6);
+    border-radius: 50%;
+    color: #fff;
+    border: none;
+}
+
+.carousel-img {
+    width: 80%;
+    height: 85vh;            /* MISMO ALTO PARA TODAS */
+    object-fit: cover;        /* CORTA SIN DEFORMAR */
+    margin: 0 auto;           /* CENTRADA */
+    border-radius: 10px;      /* opcional */
+}
+@media (max-width: 768px) {
+    .carousel-img {
+        width: 95%;
+        height: 85vh;
+    }
+}
+/* Sub menú de Informes */
+.card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+a:hover .card {
+    background-color: rgb(216, 238, 238);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* EFECTOS BOOTSTRAP-LIKE PARA INFORMES */
+.transition {
+    transition: all 0.25s ease-in-out;
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 0.75rem 1.5rem rgba(0,0,0,.15) !important;
+}
+
+.hover-scale:hover {
+    transform: translateY(-6px);
+}
+
+/* ===============================
+   EFECTO MENU LATERAL (SIDEBAR)
+   =============================== */
+.sidebar-menu .sidebar-item {
+    width: 100%;
+    border-radius: 8px;
+    margin: 4px 0;
+    padding: 10px 12px;
+    transition: all 0.25s ease-in-out;
+}
+
+/* Hover */
+.sidebar-menu .sidebar-item:hover {
+    background-color: #dc3545; /* Bootstrap danger */
+    color: #fff;
+    transform: translateX(4px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.35);
+}
+
+/* Ícono animado */
+.sidebar-menu .sidebar-item i {
+    transition: transform 0.25s ease-in-out;
+}
+
+.sidebar-menu .sidebar-item:hover i {
+    transform: scale(1.15);
+}
+
+/* Activo */
+.sidebar-menu .nav-link.active {
+    background-color: #0d6efd !important;
+    box-shadow: 0 0.5rem 1rem rgba(13,110,253,.45);
+}
+
+
