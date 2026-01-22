@@ -89,14 +89,17 @@ class Informe
         $sql = "
         SELECT 
             v.fech_venta,
-            v.clie_venta,
-            u.nomb_usuario,
+            cl.nomb_cliente,
+            cl.apel_cliente,
             v.subt_venta,
+            v.desc_venta,
             v.iva_venta,
             v.tota_venta,
+            u.nomb_usuario,
             v.regi_venta
-        FROM t_ventas v
-        INNER JOIN t_usuarios u ON u.id_usuario = v.id_usuario
+        FROM (t_ventas v
+        INNER JOIN t_usuarios u ON u.id_usuario = v.id_usuario)
+        INNER JOIN t_clientes as cl ON v.id_cliente=cl.id_cliente
         WHERE v.esta_venta = 1
           AND v.fech_venta BETWEEN :fi AND :ff
         ORDER BY v.fech_venta DESC
@@ -117,11 +120,7 @@ class Informe
     {
         $sql = "
         SELECT 
-            fech_venta,
-            clie_venta,
-            subt_venta,
-            iva_venta,
-            tota_venta
+        *
         FROM t_ventas
         WHERE esta_venta = 1
         ORDER BY fech_venta DESC
@@ -181,14 +180,17 @@ class Informe
         $sql = "
         SELECT 
             v.fech_venta,
-            v.clie_venta,
+            cl.nomb_cliente,
+            cl.apel_cliente,
             u.nomb_usuario,
             v.subt_venta,
+            v.desc_venta,
             v.iva_venta,
             v.tota_venta,
             v.regi_venta
-        FROM t_ventas v
-        INNER JOIN t_usuarios u ON u.id_usuario = v.id_usuario
+        FROM (t_ventas v
+        INNER JOIN t_usuarios u ON u.id_usuario = v.id_usuario)
+        INNER JOIN t_clientes as cl ON v.id_cliente=cl.id_cliente
         WHERE v.esta_venta = 1
           AND v.fech_venta BETWEEN ? AND ?
         ORDER BY v.fech_venta DESC

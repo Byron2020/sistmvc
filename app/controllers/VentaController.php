@@ -4,12 +4,15 @@ require_once __DIR__ . '/../models/Venta.php';
 require_once __DIR__ . '/../models/Product.php';
 // PDF-> Mpdf
 require_once __DIR__ . '/../../vendor/autoload.php';
+//require_once 'app/models/Cliente.php';
+require_once __DIR__ . '/../models/Cliente.php';
 
 use Mpdf\Mpdf;
 //------------------
 
 class VentaController
 {
+
     /* =========================================
        LISTADO CON PAGINACIÓN
     ========================================= */
@@ -36,8 +39,9 @@ class VentaController
     ========================================= */
     public function create()
     {
-
         role_required(['Administrador', 'Vendedor']);
+        $clienteModel = new Cliente();
+        $clientes = $clienteModel->getActivos(); // solo esta_cliente = 1
 
         $productModel = new Product();
         $productos = $productModel->getAll()->fetchAll(PDO::FETCH_ASSOC);
@@ -53,6 +57,7 @@ class VentaController
         role_required(['Administrador', 'Vendedor']);
 
         if (
+            
             empty($_POST['carrito']) ||
             empty($_POST['subtotal']) ||
             empty($_POST['total'])
@@ -67,10 +72,11 @@ class VentaController
         }
 
         $data = [
+            'cliente'  => $_POST['id_cliente'],
             'usuario'  => $_SESSION['user_id'],
-            'cliente'  => $_POST['clie_venta'],
             'fecha'    => $_POST['fech_venta'],
             'subtotal' => $_POST['subtotal'],
+            'descuento'=> $_POST['desc_monto'],
             'iva'      => $_POST['iva_monto'],
             'total'    => $_POST['total'],
             'carrito'  => $carrito

@@ -75,7 +75,8 @@ $fechaInicioDefault = date('Y-m-d', strtotime('-1 month'));
                         <th>Cliente</th>
                         <th>Usuario</th>
                         <th class="text-end">Subtotal</th>
-                        <th class="text-end">IVA</th>
+                        <th class="text-end">Descuento</th>
+                        <th class="text-end">Iva</th>
                         <th class="text-end">Total</th>
                         <th>Registro</th>
                     </tr>
@@ -86,6 +87,7 @@ $fechaInicioDefault = date('Y-m-d', strtotime('-1 month'));
                         <?php
                         $i = 1;
                         $sumSubtotal = 0;
+                        $sumDescuento      = 0;
                         $sumIva      = 0;
                         $sumTotal    = 0;
                         ?>
@@ -93,14 +95,16 @@ $fechaInicioDefault = date('Y-m-d', strtotime('-1 month'));
                             <?php
                             $sumSubtotal += $v['subt_venta'];
                             $sumIva      += $v['iva_venta'];
+                            $sumDescuento      += $v['desc_venta'];
                             $sumTotal    += $v['tota_venta'];
                             ?>
                             <tr>
                                 <td><?= $i++ ?></td>
                                 <td><?= htmlspecialchars($v['fech_venta']) ?></td>
-                                <td><?= htmlspecialchars($v['clie_venta']) ?></td>
+                                <td><?= htmlspecialchars($v['nomb_cliente'].' '.$v['apel_cliente']) ?></td>
                                 <td><?= htmlspecialchars($v['nomb_usuario']) ?></td>
                                 <td class="text-end">$ <?= number_format($v['subt_venta'], 2) ?></td>
+                                <td class="text-end">$ <?= number_format($v['desc_venta'], 2) ?></td>
                                 <td class="text-end">$ <?= number_format($v['iva_venta'], 2) ?></td>
                                 <td class="text-end">$ <?= number_format($v['tota_venta'], 2) ?></td>
                                 <td><?= htmlspecialchars($v['regi_venta']) ?></td>
@@ -166,6 +170,10 @@ $fechaInicioDefault = date('Y-m-d', strtotime('-1 month'));
                             <tr>
                                 <th>Subtotal</th>
                                 <td class="text-end">$ <?= number_format($sumSubtotal, 2) ?></td>
+                            </tr>
+                            <tr>
+                                <th>Descuento</th>
+                                <td class="text-end">$ <?= number_format($sumDescuento, 2) ?></td>
                             </tr>
                             <tr>
                                 <th>IVA</th>

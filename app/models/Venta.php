@@ -16,23 +16,24 @@ class Venta
     ========================================= */
     public function getAll()
     {
-        $sql = "SELECT v.*, u.nomb_usuario
-                FROM t_ventas v
-                JOIN t_usuarios u ON v.id_usuario = u.id_usuario
+        $sql = "SELECT v.*,cl.nomb_cliente, cl.apel_cliente, u.nomb_usuario
+                FROM (t_ventas v
+                JOIN t_usuarios u ON v.id_usuario = u.id_usuario)
+                inner JOIN t_clientes as cl ON v.id_cliente=cl.id_cliente
                 WHERE v.esta_venta = 1
                 ORDER BY v.id_venta DESC";
 
         return $this->conn->query($sql)->fetchAll(PDO::FETCH_ASSOC);
     }
-
     /* =========================================
        LISTADO PAGINADO
     ========================================= */
     public function getPaginadas($limit, $offset)
     {
-        $sql = "SELECT v.*, u.nomb_usuario
-                FROM t_ventas v
-                JOIN t_usuarios u ON v.id_usuario = u.id_usuario
+        $sql = "SELECT v.*,cl.nomb_cliente, cl.apel_cliente, u.nomb_usuario
+                FROM (t_ventas v
+                JOIN t_usuarios u ON v.id_usuario = u.id_usuario)
+                inner JOIN t_clientes as cl ON v.id_cliente=cl.id_cliente
                 WHERE v.esta_venta = 1
                 ORDER BY v.id_venta DESC
                 LIMIT ? OFFSET ?";
@@ -59,24 +60,25 @@ class Venta
         try {
             $this->conn->beginTransaction();
 
-            // 1️⃣ CABECERA
+            // 1 CABECERA
             $sql = "INSERT INTO t_ventas
-                (id_usuario, fech_venta,clie_venta, subt_venta, iva_venta, tota_venta)
-                VALUES (?, ?,? ,?, ?, ?)";
+                (id_cliente, id_usuario, fech_venta, subt_venta, iva_venta, desc_venta, tota_venta)
+                VALUES (?,?,?,?,?,?,?)";
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute([
+                $data['cliente'],
                 $data['usuario'],
                 $data['fecha'],
-                $data['cliente'],
                 $data['subtotal'],
                 $data['iva'],
+                $data['descuento'],
                 $data['total']
             ]);
 
             $idVenta = $this->conn->lastInsertId();
 
-            // 2️⃣ DETALLE + STOCK
+            // 2️ DETALLE + STOCK
             foreach ($data['carrito'] as $p) {
 
                 if ($p['cantidad'] > $p['stock']) {
@@ -132,9 +134,10 @@ class Venta
     }
     public function getById($id)
     {
-        $sql = "SELECT v.*, u.nomb_usuario
-            FROM t_ventas v
-            JOIN t_usuarios u ON v.id_usuario = u.id_usuario
+        $sql = "SELECT v.*, u.nomb_usuario,cl.nomb_cliente, cl.apel_cliente
+            FROM (t_ventas v
+            JOIN t_usuarios u ON v.id_usuario = u.id_usuario)
+            INNER join t_clientes as cl ON v.id_cliente=cl.id_cliente
             WHERE v.id_venta = ?";
 
         $stmt = $this->conn->prepare($sql);

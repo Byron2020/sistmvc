@@ -6,6 +6,32 @@ include('app/helpers/auth.php');
 /* ===  ESTADO DE SESIÓN ===  ===  ===  ===  ===  == */
 $logged = isset($_SESSION['user_id']);
 
+// ========== CLIENTES - POST / DELETE ==========================
+if (isset($_GET['page'], $_GET['action']) && $_GET['page'] === 'clientes') {
+
+    require_once 'app/controllers/ClienteController.php';
+    $controller = new ClienteController();
+
+    if ($_GET['action'] === 'destroy') {
+        $controller->destroy();
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        if ($_GET['action'] === 'create') {
+            $controller->store();
+            exit;
+        }
+
+        if ($_GET['action'] === 'edit') {
+            $controller->update();
+            exit;
+        }
+    }
+}
+
+
 // ========== PRODUCTOS - POST / DELETE =====================================
 if (isset($_GET['page'], $_GET['action']) && $_GET['page'] === 'productos') {
 
@@ -170,8 +196,22 @@ switch ($page) {
         $action = $_GET['action'] ?? 'index';
 
         if ($action === 'create') {
-            //$controller->create();
             include 'app/views/products/create_product.php';
+        } elseif ($action === 'edit') {
+            $controller->edit();
+        } else {
+            $controller->index();
+        }
+        break;
+    case 'clientes':
+        role_required(['Administrador']);
+        require_once 'app/controllers/ClienteController.php';
+
+        $controller = new ClienteController();
+        $action = $_GET['action'] ?? 'index';
+
+        if ($action === 'create') {
+            $controller->create();
         } elseif ($action === 'edit') {
             $controller->edit();
         } else {
@@ -222,7 +262,6 @@ switch ($page) {
         $action = $_GET['action'] ?? 'index';
 
         switch ($action) {
-
             case 'create':
                 $controller->create();
                 break;

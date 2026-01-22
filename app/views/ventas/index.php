@@ -15,6 +15,7 @@
                     <th>Cliente</th>
                     <th>Usuario</th>
                     <th>Subtotal</th>
+                    <th>Descuento</th>
                     <th>IVA</th>
                     <th>Total</th>
                     <th width="120">Acciones</th>
@@ -26,9 +27,10 @@
                     <tr>
                         <td><?= $i++; ?></td>
                         <td><?= $v['fech_venta'] ?></td>
-                        <td><?= $v['clie_venta'] ?></td>
+                        <td><?= $v['nomb_cliente'].' '.$v['apel_cliente'] ?></td>
                         <td><?= $v['nomb_usuario'] ?></td>
                         <td class="text-end">$<?= number_format($v['subt_venta'], 2) ?></td>
+                        <td class="text-end">$<?= number_format($v['desc_venta'], 2) ?></td>
                         <td class="text-end">$<?= number_format($v['iva_venta'], 2) ?></td>
                         <td class="text-end fw-bold">$<?= number_format($v['tota_venta'], 2) ?></td>
                         <td class="text-center">

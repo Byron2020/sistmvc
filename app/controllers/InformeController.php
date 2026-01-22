@@ -205,7 +205,7 @@ class InformeController
             $html .= "</tr>";
 
             $i = 1;
-            $sumSubtotal = $sumIva = $sumTotal = 0;
+            $sumSubtotal = $sumDescuento = $sumIva = $sumTotal = 0;
 
             foreach ($data as $row) {
                 $html .= "<tr><td align='center'>" . $i . "</td>";
@@ -226,7 +226,11 @@ class InformeController
                         $sumSubtotal += is_numeric($val) ? (float)$val : 0;
                         $html .= "<td align='right'>$ " . number_format($val, 2) . "</td>";
                     }
-
+                    // DESCUENTO
+                    elseif ($key === 'desc_venta') {
+                        $sumDescuento += (float)$val;
+                        $html .= "<td align='right'>$ " . number_format($val, 2) . "</td>";
+                    }
                     // IVA
                     elseif (str_contains($key, 'iva')) {
                         $sumIva += (float)$val;
@@ -274,7 +278,11 @@ class InformeController
                             <td style="text-align:right;">$ ' . number_format($sumSubtotal, 2) . '</td>
                         </tr>
                         <tr>
-                            <th>IVA</th>
+                            <th>Descuento</th>
+                            <td style="text-align:right;">$ ' . number_format($sumDescuento, 2) . '</td>
+                        </tr>
+                        <tr>
+                            <th>Iva</th>
                             <td style="text-align:right;">$ ' . number_format($sumIva, 2) . '</td>
                         </tr>
                         <tr class="total">

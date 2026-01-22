@@ -26,20 +26,20 @@
                 <strong>Subtotal:</strong>
                 <span>$ <span id="subtotal">0.00</span></span>
             </div>
-
-            <!-- IVA -->
-            <div class="d-flex justify-content-between mt-2">
-                <strong>IVA (%)</strong>
-                <input type="number" id="iva" value="15" class="form-control form-control-sm w-25"
-                    oninput="calcularTotales()">
-            </div>
-
-            <!-- IVA CALCULADO -->
-            <div class="d-flex justify-content-between mt-2">
-                <strong>IVA $:</strong>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <div class="d-flex align-items-center gap-2">
+                    <strong>IVA (%)</strong>
+                    <input type="number"
+                        id="iva"
+                        class="form-control form-control-sm"
+                        style="width: 70px;"
+                        value="15"
+                        step="any"
+                        min="0"
+                        oninput="calcularTotales()">
+                </div>
                 <span>$ <span id="ivaMonto">0.00</span></span>
             </div>
-
             <hr>
 
             <!-- TOTAL -->

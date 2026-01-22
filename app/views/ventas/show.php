@@ -25,7 +25,7 @@
                     <strong>Fecha:</strong> <?= $ventaData['fech_venta'] ?>
                 </div>
                 <div class="col-md-4">
-                    <strong>Cliente:</strong> <?= $ventaData['clie_venta'] ?>
+                    <strong>Cliente:</strong> <?= $ventaData['nomb_cliente'] . ' ' . $ventaData['apel_cliente'] ?>
                 </div>
                 <div class="col-md-4">
                     <strong>Usuario:</strong> <?= $ventaData['nomb_usuario'] ?>
@@ -37,7 +37,7 @@
     <!-- DETALLE -->
     <table class="table table-bordered table-sm">
         <thead class="table-dark">
-            <tr >
+            <tr>
                 <th>#</th>
                 <th>Producto</th>
                 <th>Cantidad</th>
@@ -46,7 +46,8 @@
             </tr>
         </thead>
         <tbody>
-            <?php $i=1; foreach ($detalle as $d): ?>
+            <?php $i = 1;
+            foreach ($detalle as $d): ?>
                 <tr>
                     <td><?= $i++; ?></td>
                     <td><?= $d['nomb_producto'] ?></td>
@@ -58,14 +59,21 @@
         </tbody>
     </table>
     <div class="row">
-        <div class="col-md-4 text-end">
-            <strong>Subtotal:</strong> $<?= number_format($ventaData['subt_venta'], 2) ?>
+        <div class="row col-md text-end">
+            <strong class="col-md">Subtotal:</strong>
+            <p class="col-md-2">$<?= number_format($ventaData['subt_venta'], 2) ?></p>
         </div>
-        <div class="col-md-4 text-end">
-            <strong>IVA:</strong> $<?= number_format($ventaData['iva_venta'], 2) ?>
+        <div class="row col-md- text-end">
+            <strong class="col-md">Descuento:</strong>
+            <p class="col-md-2">$<?= number_format($ventaData['desc_venta'], 2) ?></p>
         </div>
-        <div class="col-md-4 text-end">
-            <strong>Total:</strong> $<?= number_format($ventaData['tota_venta'], 2) ?>
+        <div class="row col-md- text-end">
+            <strong class="col-md">IVA:</strong>
+            <p class="col-md-2">$<?= number_format($ventaData['iva_venta'], 2) ?></p>
+        </div>
+        <div class="row col-md- text-end">
+            <strong class="col-md">Total:</strong>
+            <p class="col-md-2">$<?= number_format($ventaData['tota_venta'], 2) ?></p>
         </div>
     </div>
 </div>

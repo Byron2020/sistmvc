@@ -8,10 +8,26 @@
         <div class="col-md-5">
             <h5 class="text-center"><strong> Detalle de Venta</strong></h5>
             <div class="d-flex">
+
                 <div class="p-2 flex-grow-1">
-                     <label>Ciente</label>
-                <input type="text" name="clie_venta" id="clie_venta" class="form-control" value="Consumidor final" required>
+                    <label>Cliente</label>
+
+                    <div class="input-group">
+                        <span class="input-group-text">
+                            <i class="bi bi-person-badge"></i>
+                        </span>
+
+                        <select name="id_cliente" class="form-select" required>
+                            <?php foreach ($clientes as $c): ?>
+                                <option value="<?= $c['id_cliente'] ?>"
+                                    <?= $c['id_cliente'] == 1 ? 'selected' : '' ?>>
+                                    <?= $c['nomb_cliente'] . ' ' . $c['apel_cliente'] ?>
+                                </option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
                 </div>
+
                 <div class="p-2">
                     <label>Fecha de Factura</label>
                     <input type="date" name="fech_venta" id="fech_venta" class="form-control"
@@ -25,22 +41,38 @@
                 <strong>Subtotal:</strong>
                 <span>$ <span id="subtotal">0.00</span></span>
             </div>
+            <!-- DESCUENTO -->
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <div class="d-flex align-items-center gap-2">
+                    <strong>Descuento (%)</strong>
+                    <input type="number"
+                        id="descuento"
+                        class="form-control form-control-sm"
+                        style="width: 70px;"
+                        value="0"
+                        step="any"
+                        min="0"
+                        oninput="renderCarrito()">
+                </div>
 
-            <!-- IVA -->
-            <div class="d-flex justify-content-between mt-2">
-                <strong>IVA (%)</strong>
-                <input type="number" id="iva" value="0" class="form-control form-control-sm w-25"
-                    oninput="renderCarrito()()">
+                <span>$ <span id="descuentoMonto">0.00</span></span>
             </div>
-
-            <!-- IVA CALCULADO -->
-            <div class="d-flex justify-content-between mt-2">
-                <strong>IVA $:</strong>
+            <!-- IVA -->
+            <div class="d-flex justify-content-between align-items-center mt-2">
+                <div class="d-flex align-items-center gap-2">
+                    <strong>IVA (%)</strong>
+                    <input type="number"
+                        id="iva"
+                        class="form-control form-control-sm"
+                        style="width: 70px;"
+                        value="0"
+                        step="any"
+                        min="0"
+                        oninput="renderCarrito()">
+                </div>
                 <span>$ <span id="ivaMonto">0.00</span></span>
             </div>
-
             <hr>
-
             <!-- TOTAL -->
             <div class="d-flex justify-content-between fs-5">
                 <strong>Total:</strong>
@@ -60,6 +92,8 @@
         <input type="hidden" name="iva" id="inputIva">
         <input type="hidden" name="iva_monto" id="inputIvaMonto">
         <input type="hidden" name="total" id="inputTotal">
+        <input type="hidden" name="descuento" id="inputDescuento">
+        <input type="hidden" name="desc_monto" id="inputDescuentoMonto">
 </form>
 <!-- DERECHA -->
 <div class="col-md-7">
@@ -135,6 +169,10 @@
     const inputIvaMonto = document.getElementById('inputIvaMonto');
     const inputTotal = document.getElementById('inputTotal');
     const carritoInput = document.getElementById('carritoInput');
+
+    const descuentoMontoSpan = document.getElementById('descuentoMonto');
+    const inputDescuento = document.getElementById('inputDescuento');
+    const inputDescuentoMonto = document.getElementById('inputDescuentoMonto');
 
     let carrito = [];
     let actual = {};
@@ -282,14 +320,22 @@
         });
 
         const ivaPorcentaje = parseFloat(document.getElementById('iva').value) || 0;
-        const ivaMonto = subtotal * ivaPorcentaje / 100;
-        const total = subtotal + ivaMonto;
+        const descuentoPorcentaje = parseFloat(document.getElementById('descuento').value) || 0;
+
+        const descuentoMonto = subtotal * descuentoPorcentaje / 100;
+        const baseConDescuento = subtotal - descuentoMonto;
+
+        const ivaMonto = baseConDescuento * ivaPorcentaje / 100;
+        const total = baseConDescuento + ivaMonto;
 
         subtotalSpan.innerText = subtotal.toFixed(2);
+        descuentoMontoSpan.innerText = descuentoMonto.toFixed(2);
         ivaMontoSpan.innerText = ivaMonto.toFixed(2);
         totalSpan.innerText = total.toFixed(2);
 
         inputSubtotal.value = subtotal.toFixed(2);
+        inputDescuento.value = descuentoPorcentaje;
+        inputDescuentoMonto.value = descuentoMonto.toFixed(2);
         inputIvaMonto.value = ivaMonto.toFixed(2);
         inputTotal.value = total.toFixed(2);
     }

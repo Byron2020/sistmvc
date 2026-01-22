@@ -58,7 +58,7 @@
 
     <div class="info">
         <p><strong>Fecha:</strong> <?= $ventaData['fech_venta'] ?></p>
-        <p><strong>Cliente:</strong> <?= $ventaData['clie_venta'] ?></p>
+        <p><strong>Cliente:</strong> <?= $ventaData['nomb_cliente'].' '.$ventaData['apel_cliente'] ?></p>
         <p><strong>Vendedor:</strong> <?= $ventaData['nomb_usuario'] ?></p>
     </div>
 
@@ -90,6 +90,10 @@
         <tr>
             <th>Subtotal</th>
             <td style="text-align:right;"><?= number_format($ventaData['subt_venta'], 2) ?></td>
+        </tr>
+        <tr>
+            <th>Descuento</th>
+            <td style="text-align:right;"><?= number_format($ventaData['desc_venta'], 2) ?></td>
         </tr>
         <tr>
             <th>IVA</th>
