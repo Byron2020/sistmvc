@@ -26,6 +26,12 @@
                 </a>
               </li>
               <li>
+                <a href="index.php?page=clientes" class="nav-link text-white px-0 sidebar-item">
+                  <i class="bi bi-people fs-5"></i>
+                  <span class="ms-2 d-none d-sm-inline">Clientes</span>
+                </a>
+              </li>
+              <li>
                 <a href="index.php?page=reportes" class="nav-link text-white px-0 sidebar-item">
                   <i class="bi bi-bar-chart-line fs-5"></i>
                   <span class="ms-2 d-none d-sm-inline">Gráficas</span>
