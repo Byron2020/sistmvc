@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>Iniciar Sesión</ion-title>
+    </ion-toolbar>
+  </ion-header>
+<ion-content>
+
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+
+    <ion-item>
+      <ion-label position="floating">Cédula</ion-label>
+      <ion-input type="text" formControlName="cedula" maxlength="10"></ion-input>
+    </ion-item>
+    <div *ngIf="loginForm.get('cedula')?.invalid && loginForm.get('cedula')?.touched" class="error-text">
+      Debe ingresar 10 dígitos (0-9)
+    </div>
+
+    <ion-item>
+      <ion-label position="floating">Contraseña</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-text">
+      La contraseña es requerida
+    </div>
+
+    <ion-button expand="block" type="submit" [disabled]="loading || loginForm.invalid">
+      {{ loading ? 'Ingresando...' : 'Login' }}
+    </ion-button>
+
+  </form>
+
+  <ion-toast
+    [isOpen]="toastMessage !== ''"
+    [message]="toastMessage"
+    duration="3000"
+    color="danger"
+    (ionToastDidDismiss)="toastMessage = ''">
+  </ion-toast>
+</ion-content>

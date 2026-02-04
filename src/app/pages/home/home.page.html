@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Datos locales</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logout()">Salir</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- PROGRESO -->
+  <div *ngIf="loading" style="text-align:center">
+    <ion-spinner></ion-spinner>
+    <p>{{ progress }} %</p>
+  </div>
+
+  <!-- BUSCADOR -->
+  <ion-item>
+    <ion-input
+      placeholder="Buscar..."
+      [(ngModel)]="searchText"
+      (ionInput)="buscar()">
+    </ion-input>
+  </ion-item>
+
+  <!-- RESULTADOS -->
+  <ion-item *ngFor="let r of resultados">
+    <ion-label>
+      <h2>{{ r.campo1 }}</h2>
+      <p>{{ r.campo2 }} - {{ r.campo3 }}</p>
+    </ion-label>
+  </ion-item>
+
+  <p *ngIf="!resultados.length && searchText">
+    Sin resultados
+  </p>
+
+</ion-content>

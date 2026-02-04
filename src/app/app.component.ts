@@ -1,27 +1,120 @@
-
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
+import { FormsModule } from '@angular/forms';
+
+import {
+  IonApp,
+  IonSplitPane,
+  IonMenu,
+  IonContent,
+  IonList,
+  IonSelect,
+  IonSelectOption,
+  IonListHeader,
+  IonNote,
+  IonMenuToggle,
+  IonItem,
+  IonIcon,
+  IonLabel,
+  IonRouterOutlet,
+  IonRouterLink,
+} from '@ionic/angular/standalone';
+
 import { addIcons } from 'ionicons';
-import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp } from 'ionicons/icons';
+import {
+  homeOutline,
+  homeSharp,
+  bookmarkOutline,
+  bookmarkSharp,
+  peopleOutline,
+  peopleCircleOutline,
+  personAddOutline
+} from 'ionicons/icons';
+import { AuthService } from './services/auth-service';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  imports: [RouterLink, RouterLinkActive, IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterLink, IonRouterOutlet],
+  imports: [
+    FormsModule,
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    IonApp,
+    IonSplitPane,
+    IonMenu,
+    IonContent,
+    IonList,
+    IonSelect,
+    IonSelectOption,
+    IonListHeader,
+    IonNote,
+    IonMenuToggle,
+    IonItem,
+    IonIcon,
+    IonLabel,
+    IonRouterLink,
+    IonRouterOutlet,
+  ],
 })
 export class AppComponent {
-  public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
+  labels = ['Family', 'Friends', 'Work', 'Travel', 'Reminders'];
+  user: any = null;
+  usuarios: any[] = [];
+  selectedUser: string = '';
+
+  appPages = [
+    { title: 'Inicio', url: '/home', ios: 'home-outline', md: 'home-sharp' },
+    // Puedes agregar más páginas aquí
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
-  constructor() {
-    addIcons({ mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp });
+
+  constructor(public auth: AuthService) {
+    //CArgar datos sin recargar la pagina
+    this.auth.user$.subscribe((u) => {
+      this.user = u;
+      // SOLO cuando ya hay usuario
+      if (u) {
+        this.cargarUsuarios();
+      }
+    });
+    // Registrar íconos
+    addIcons({
+      homeOutline,
+      homeSharp,
+      bookmarkOutline,
+      bookmarkSharp,
+      peopleOutline,
+      peopleCircleOutline,
+      personAddOutline
+    });
+    const storedUser = localStorage.getItem('user');
+    if (storedUser) {
+      this.user = JSON.parse(storedUser);
+    }
+  }
+  ngOnInit() {
+    this.loadUsuarios();
+  }
+  cargarUsuarios() {
+    this.auth.getUsuarios().subscribe((response) => {
+      this.usuarios = response.filter((u) => u.id_usuario !== this.user.id);
+    });
+  }
+  loadUsuarios() {
+    this.auth.getUsuarios().subscribe((data) => {
+      if (!this.user) {
+        return;
+      }
+      this.usuarios = data.filter((u) => u.id_usuario !== this.user.id);
+    });
+  }
+  logout() {
+    this.auth.logout();
+  }
+
+  get isLogged() {
+    return !!this.user;
   }
 }
