@@ -1,56 +1,20 @@
 <?php
-auth_required();
+// app/views/dashboard/index.php - Panel para usuarios logueados
 ?>
-
-<div id="carouselExample" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
-
-  <div class="carousel-inner">
-
-    <div class="carousel-item active">
-      <div class="carousel-img-wrapper">
-        <img src="app/img/wc1.jpg" class="carousel-img" alt="Banner 1">
-
-        <!-- BANNER INFORMATIVO -->
-        <div class="info-banner">
-          Información importante del banner 1
+<div class="container">
+    <h1>Bienvenido al Sistema</h1>
+    <p>Has iniciado sesión como: <strong><?= htmlspecialchars($_SESSION['rol'] ?? 'Usuario') ?></strong></p>
+    
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Productos</div>
+                <div class="card-body">
+                    <h5 class="card-title">Gestión de inventario</h5>
+                    <a href="index.php?page=productos" class="btn btn-light">Ir</a>
+                </div>
+            </div>
         </div>
-      </div>
+        <!-- Más tarjetas según el rol -->
     </div>
-
-    <div class="carousel-item">
-      <div class="carousel-img-wrapper">
-        <img src="app/img/wc2.jpg" class="carousel-img" alt="Banner 2">
-        <div class="info-banner">
-          Información importante del banner 2
-        </div>
-      </div>
-    </div>
-
-    <div class="carousel-item">
-      <div class="carousel-img-wrapper">
-        <img src="app/img/wc3.jpg" class="carousel-img" alt="Banner 3">
-        <div class="info-banner">
-          Información importante del banner 3
-        </div>
-      </div>
-    </div>
-
-    <div class="carousel-item">
-      <div class="carousel-img-wrapper">
-        <img src="app/img/wc4.jpg" class="carousel-img" alt="Banner 4">
-        <div class="info-banner">
-          Información importante del banner 4
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- BOTONES A LA DERECHA -->
-  <div class="carousel-controls-vertical">
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">‹</button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">›</button>
-  </div>
-
 </div>
-

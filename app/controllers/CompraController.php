@@ -85,12 +85,6 @@ class CompraController
 
     public function anular()
     {
-         $_SESSION['swal'] = [
-            'icon' => 'success',
-            'title' => 'prueba Operación exitosa',
-            'text' => 'Datos eliminados correctamente',
-            'timer' => 3500
-        ];
         $id = $_GET['id'];
 
         $model = new Compra();

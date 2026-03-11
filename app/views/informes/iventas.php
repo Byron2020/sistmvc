@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('America/Guayaquil');
 // ===============================
 // FECHAS POR DEFECTO
 // ===============================
@@ -12,7 +13,7 @@ $fechaInicioDefault = date('Y-m-d', strtotime('-1 month'));
          BOTONES SUPERIORES
     ========================== -->
     <div class="d-flex justify-content-between mb-3">
-        <a href="index.php?page=informes&action=pdf&tipo=ventas"
+        <a href="index.php?page=informes&action=pdf&tipo=ventas&fi=<?= $fechaInicio ?>&ff=<?= $fechaFin ?>"
             class="btn btn-danger" target="_blank">
             <i class="bi bi-file-earmark-pdf"></i> Exportar PDF
         </a>

@@ -13,7 +13,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <label>Fecha de Factura</label>
+                    <label>Fecha</label>
                     <input type="date" name="fech_factura" id="fech_factura" class="form-control"
                         value="<?= date('Y-m-d') ?>" required>
                 </div>

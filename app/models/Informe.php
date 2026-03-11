@@ -98,8 +98,8 @@ class Informe
             u.nomb_usuario,
             v.regi_venta
         FROM (t_ventas v
-        INNER JOIN t_usuarios u ON u.id_usuario = v.id_usuario)
-        INNER JOIN t_clientes as cl ON v.id_cliente=cl.id_cliente
+        LEFT JOIN t_usuarios u ON u.id_usuario = v.id_usuario)
+        LEFT JOIN t_clientes as cl ON v.id_cliente=cl.id_cliente
         WHERE v.esta_venta = 1
           AND v.fech_venta BETWEEN :fi AND :ff
         ORDER BY v.fech_venta DESC
@@ -189,10 +189,10 @@ class Informe
             v.tota_venta,
             v.regi_venta
         FROM (t_ventas v
-        INNER JOIN t_usuarios u ON u.id_usuario = v.id_usuario)
-        INNER JOIN t_clientes as cl ON v.id_cliente=cl.id_cliente
+        LEFT JOIN t_usuarios u ON u.id_usuario = v.id_usuario)
+        LEFT JOIN t_clientes as cl ON v.id_cliente=cl.id_cliente
         WHERE v.esta_venta = 1
-          AND v.fech_venta BETWEEN ? AND ?
+        AND v.fech_venta BETWEEN ? AND ?
         ORDER BY v.fech_venta DESC
         LIMIT ? OFFSET ?
     ";

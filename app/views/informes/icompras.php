@@ -1,5 +1,6 @@
 <?php
 // Fechas por defecto
+date_default_timezone_set('America/Guayaquil');
 $fechaFinDefault = date('Y-m-d');
 $fechaInicioDefault = date('Y-m-d', strtotime('-1 month'));
 // strtotime maneja automáticamente febrero, meses de 28/30/31 días
@@ -11,7 +12,7 @@ $fechaInicioDefault = date('Y-m-d', strtotime('-1 month'));
          BOTONES SUPERIORES
     ========================== -->
     <div class="d-flex justify-content-between mb-3">
-        <a href="index.php?page=informes&action=pdf&tipo=compras"
+        <a href="index.php?page=informes&action=pdf&tipo=compras&fi=<?= $fechaIni ?>&ff=<?= $fechaFin ?>"
             class="btn btn-danger" target="_blank">
             <i class="bi bi-file-earmark-pdf"></i> Exportar PDF
         </a>

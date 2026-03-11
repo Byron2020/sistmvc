@@ -29,7 +29,7 @@
                 </div>
 
                 <div class="p-2">
-                    <label>Fecha de Factura</label>
+                    <label>Fecha</label>
                     <input type="date" name="fech_venta" id="fech_venta" class="form-control"
                         value="<?= date('Y-m-d') ?>" required>
                 </div>
